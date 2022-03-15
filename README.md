@@ -2,7 +2,7 @@
 
 # BACKEND BASE
 
-Plataforma backend base basada en laravel 9
+Plataforma backend base basada en laravel 9.
 
 ### Documentación
 
