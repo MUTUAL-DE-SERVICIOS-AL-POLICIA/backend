@@ -46,6 +46,7 @@ jobs:
           #github_token: ${{ secrets.GITHUB_TOKEN }}
 
   build-test:
+    needs: [code-risk-analyzer] 
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -53,8 +54,9 @@ jobs:
     - uses: php-actions/phpstan@v3
       with:
         path: app/
-        
+
  Psalm:
+    needs: [build-test] 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -63,7 +65,7 @@ jobs:
         uses: docker://vimeo/psalm-github-actions
 
   deploy:
-    needs: [runPHPCSInspection] 
+    needs: [Psalm] 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
