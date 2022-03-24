@@ -45,23 +45,14 @@ jobs:
           github_token: ${{ secrets.GTB_TOKEN }}
           #github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  runPHPCSInspection:
-    name: Run PHPCS inspection
-    needs: [code-risk-analyzer] 
+  build-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: php-actions/composer@v6 # or alternative dependency management
+    - uses: php-actions/phpstan@v3
       with:
-        ref: ${{ github.event.pull_request.head.sha }}
-    - name: Run PHPCS inspection
-      uses: rtCamp/action-phpcs-code-review@v2
-      env:
-        # GH_BOT_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
-        GH_BOT_TOKEN: ${{ secrets.GTB_TOKEN }}
-        SKIP_FOLDERS: "tests,.github"
-        PHPCS_SNIFFS_EXCLUDE: "WordPress.Files.FileName"
-      with:
-        args: "WordPress,WordPress-Core,WordPress-Docs" 
+        path: app/
 
   deploy:
     needs: [runPHPCSInspection] 
