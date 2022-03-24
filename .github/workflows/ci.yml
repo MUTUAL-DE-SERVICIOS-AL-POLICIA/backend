@@ -54,15 +54,14 @@ jobs:
     - uses: php-actions/phpstan@v3
       with:
         path: app/
-
- Psalm:
+  Psalm:
     needs: [build-test] 
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Psalm
-        uses: docker://vimeo/psalm-github-actions
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Psalm
+      uses: docker://vimeo/psalm-github-actions
 
   deploy:
     needs: [Psalm] 
