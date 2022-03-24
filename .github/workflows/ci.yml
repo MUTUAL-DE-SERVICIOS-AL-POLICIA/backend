@@ -61,7 +61,7 @@ jobs:
         SKIP_FOLDERS: "tests,.github"
         PHPCS_SNIFFS_EXCLUDE: "WordPress.Files.FileName"
       with:
-        args: "WordPress,WordPress-Core,WordPress-Docs"
+        args: "WordPress,WordPress-Core,WordPress-Docs" 
 
   deploy:
     needs: [runPHPCSInspection] 
