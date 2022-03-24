@@ -49,19 +49,20 @@ jobs:
     needs: [code-risk-analyzer] 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: php-actions/composer@v6 # or alternative dependency management
-    - uses: php-actions/phpstan@v3
-      with:
-        path: app/
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v6 # or alternative dependency management
+      - uses: php-actions/phpstan@v3
+        with:
+          path: app/
+  
   Psalm:
     needs: [build-test] 
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Psalm
-      uses: docker://vimeo/psalm-github-actions
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Psalm
+        uses: docker://vimeo/psalm-github-actions
 
   deploy:
     needs: [Psalm] 
