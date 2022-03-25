@@ -74,7 +74,7 @@ jobs:
           sarif_file: results.sarif
 
   deploy:
-    needs: [Psalm],[build-test],[code-risk-analyzer]
+    needs: [Psalm]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
