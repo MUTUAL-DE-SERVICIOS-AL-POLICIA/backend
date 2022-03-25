@@ -27,7 +27,7 @@ jobs:
   code-risk-analyzer:
     needs: [notification] 
     # Name the Job
-    name: Code Risk Analyzer
+    #name: Code Risk Analyzer
     # Set the type of machine to run on
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +46,7 @@ jobs:
           #github_token: ${{ secrets.GITHUB_TOKEN }}
 
   build-test:
-    needs: [code-risk-analyzer] 
+    needs: [notification] 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -56,16 +56,25 @@ jobs:
           path: app/
   
   Psalm:
-    needs: [build-test] 
+    needs: [notification] 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Psalm
         uses: docker://vimeo/psalm-github-actions
+        with:
+          composer_require_dev: true
+          composer_ignore_platform_reqs: true
+          security_analysis: true
+          report_file: results.sarif
+      - name: Upload Security Analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
 
   deploy:
-    needs: [Psalm] 
+    needs: [Psalm],[build-test],[code-risk-analyzer]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
