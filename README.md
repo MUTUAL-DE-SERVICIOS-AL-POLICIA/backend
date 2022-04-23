@@ -4,6 +4,6 @@
 
 Plataforma backend base basada en laravel 9.
 
-### Documentación
+### Documentación -
 
 * [Manual de uso](./docs/use.md)
